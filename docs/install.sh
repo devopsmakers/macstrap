@@ -17,20 +17,21 @@ COLOR_BLUE="$(tput setaf 4)"
 COLOR_MAGENTA="$(tput setaf 5)"
 COLOR_CYAN="$(tput setaf 6)"
 COLOR_WHITE="$(tput setaf 7)"
+TEXT_BOLD="$(tput bold)"
 SYMBOL_TICK="✔"
 SYMBOL_CROSS="✖"
 SYMBOL_WARN="⚠"
 
 log_ok() {
-    echo "${COLOR_GREEN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
+    echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} $@ ${COLOR_RESET}"
 }
 
 log_warn() {
-    echo "${COLOR_YELLOW}${SYMBOL_WARN} $@ ${COLOR_RESET}"
+    echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} $@ ${COLOR_RESET}"
 }
 
 log_err() {
-    echo "${COLOR_RED}${SYMBOL_CROSS}${COLOR_WHITE} $@ ${COLOR_RESET}"
+    echo "${COLOR_RED}${SYMBOL_CROSS}${TEXT_BOLD}${COLOR_WHITE} $@ ${COLOR_RESET}"
 }
 
 GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
