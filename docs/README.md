@@ -12,6 +12,11 @@ The following things will be installed and configured wherever possible.
 * xterrafile
 * kubectl
 
-> :warning: I override the `open` command to open web pages in incognito with a unique
+> ⚠️I override the `open` command to open web pages in incognito with a unique
 temporary profile. This allows us to have multiple, isolated logins when using
 tools like `aws-vault` to login to the AWS Console.  
+
+## Installation
+
+TL; DR - Just tell me how to install it, I don't care if your break the things...
+`curl -o- https://devopsmakers.github.io/macstrap/install.sh | bash`
