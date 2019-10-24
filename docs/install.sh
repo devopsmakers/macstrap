@@ -118,11 +118,6 @@
     echo ""
     echo "Note: Some tools will require a new terminal window"
     echo ""
-
-    if [ -z $UP ]; then
-        # UP is not set, direct install, show help
-        #macstrap -H
-    fi
 }
 
   shell_reset() {
