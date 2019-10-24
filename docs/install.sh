@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eux -o pipefail
+
 # Surrounding in brackets ensures that the whole install script runs
 # and not just a part of it if there's a strange partial download or
 # buffering issue.
@@ -54,20 +56,20 @@ ensure_bin_dirs() {
     if [ ! -d "$HOME/.bin" ]; then
         echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing user bin directory. Attempting to create"
         mkdir -p "$HOME/.bin"
-        chmod 700 "$HOME/.bin"
+        chmod 0700 "$HOME/.bin"
         chown $USER:admin "$HOME/.bin"
     fi
     if [ ! -d "$HOME/.macstrap" ]; then
         echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing user macstrap config directory. Attempting to create"
         mkdir -p "$HOME/.macstrap"
-        chmod 700 "$HOME/.macstrap"
+        chmod 0700 "$HOME/.macstrap"
         chown $USER:admin "$HOME/.macstrap"
     fi
     if [ ! -d "/usr/local/bin" ]; then
         echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing install directory. Attempting to create, will prompt for your admin password:"
         local USER="$(whoami)"
         sudo mkdir /usr/local/bin
-        sudo chmod 775 /usr/local/bin
+        sudo chmod 0775 /usr/local/bin
         sudo chown $USER:admin /usr/local/bin
     fi
 }
