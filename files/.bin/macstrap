@@ -90,11 +90,16 @@ mac_has() {
 }
 
 check_xcode(){
-
+    if ! mac_has xcode-select; then
+        log_err "Xcode is not installed"
+    else
+        log_ok "Xcode is installed"
+    fi
+    log_info "Run xcode-select --install to ensure Xcode is up-to-date"
 }
 
 macstrap_check() {
-    true
+    check_xcode
 }
 
 macstrap_usage(){
