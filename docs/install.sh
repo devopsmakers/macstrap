@@ -110,8 +110,12 @@ install_homebrew() {
     brew --version || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
+install_jq() {
+    jq --version || /usr/local/bin/brew install jq
+}
+
 install_zsh() {
-    /usr/local/bin/brew install zsh
+    /usr/local/bin/brew install zsh zsh-completions zsh-syntax-highlighting
     grep -q /usr/local/bin/zsh /etc/shells || sudo -s 'echo /usr/local/bin/zsh >> /etc/shells'
     echo $SHELL | grep -q "/usr/local/bin/zsh" || chsh -s /usr/local/bin/zsh
     if [ ! -d "${HOME}/.oh-my-zsh" ]; then
@@ -146,6 +150,8 @@ install_main() {
     ensure_xcode
 
     install_homebrew
+
+    install_jq
     install_zsh
     install_iterm2
 
