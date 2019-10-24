@@ -114,7 +114,7 @@ function iterm_run_macstrap() {
             tell term
                 launch session "Default Session"
                 tell the last session
-                    delay 1
+                    delay 5
                     write text "macstrap -H"
                 end
             end
@@ -141,7 +141,7 @@ install_main() {
 
     echo "Install completed."
     echo ""
-    echo "Note: Some tools will require a new terminal window"
+    echo "Opening iTerm2 to run macstrap"
     echo ""
 
     set +u
