@@ -103,7 +103,7 @@ install_iterm2() {
     if [ ! -d /Applications/iTerm.app ]; then
         brew cask install iterm2
     fi
-    curl -fsS -o "/Library/Fonts/MesloLGS NF.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/S/Regular/complete/Meslo%20LG%20S%20Regular%20Nerd%20Font%20Complete.ttf
+    curl -fsS https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/S/Regular/complete/Meslo%20LG%20S%20Regular%20Nerd%20Font%20Complete.ttf -o "/Library/Fonts/MesloLGS NF.ttf"
 }
 
 function iterm_run_macstrap() {
@@ -126,11 +126,8 @@ install_main() {
     ensure_bin_dirs
     ensure_xcode
 
-    # We use homebrew for just about everything
     install_homebrew
-    # Install and configure oh-my-zsh shell
     install_zsh
-
     install_iterm2
 
     # Get the files that we want to install to $HOME
