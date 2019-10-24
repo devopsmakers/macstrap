@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eux -o pipefail
+set -eu -o pipefail
 
 # Surrounding in brackets ensures that the whole install script runs
 # and not just a part of it if there's a strange partial download or
