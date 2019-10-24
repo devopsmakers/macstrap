@@ -90,7 +90,7 @@ mac_has() {
 }
 
 macstrap_check() {
-
+    true
 }
 
 macstrap_usage(){
