@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
+
+# Surrounding in brackets ensures that the whole script gets loaded to memory
+# before running which allows us to update the script from the script without
+# issue.
+{
 set -eu -o pipefail
 
-# Surrounding in brackets ensures that the whole install script runs
-# and not just a part of it if there's a strange partial download or
-# buffering issue.
-{
 
 # Let's make some pretty stuff
 COLOR_RESET="$(tput sgr0)"
