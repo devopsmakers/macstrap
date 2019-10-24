@@ -91,7 +91,8 @@
 
   install_zsh() {
     /usr/local/bin/brew install zsh
-    sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
+    grep -q /usr/local/bin/zsh /etc/shells || sudo -s 'echo /usr/local/bin/zsh >> /etc/shells'
+    chsh -s /usr/local/bin/zsh
   }
 
   install_main() {
