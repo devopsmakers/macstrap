@@ -74,7 +74,8 @@ grab_file() {
     if [ -f "${HOME}/$1" ]; then
         mv "${HOME}/$1" "${HOME}/$1.bak"
     fi
-    curl --fail "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
+    echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} Fetching file: $1"
+    curl --fail --silent "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
     set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
