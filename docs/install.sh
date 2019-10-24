@@ -72,10 +72,10 @@ ensure_xcode() {
 
 grab_file() {
     if [ -f "${HOME}/$1" ]; then
-        mv "${HOME}/$1" "${HOME}/$1.bak"
+        mv -f "${HOME}/$1" "${HOME}/$1.bak"
     fi
     echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} Fetching file: $1"
-    curl --fail --silent "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
+    curl -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
     set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
@@ -103,7 +103,7 @@ install_iterm2() {
     if [ ! -d /Applications/iTerm.app ]; then
         brew cask install iterm2
     fi
-    curl -o "/Library/Fonts/MesloLGS NF.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/S/Regular/complete/Meslo%20LG%20S%20Regular%20Nerd%20Font%20Complete.ttf
+    curl -fsS -o "/Library/Fonts/MesloLGS NF.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/S/Regular/complete/Meslo%20LG%20S%20Regular%20Nerd%20Font%20Complete.ttf
 }
 
 function iterm_run_macstrap() {
