@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Surrounding in brackets ensures that the whole install script runs
+# and not just a part of it if there's a strange partial download or
+# buffering issue.
+{
+
+  # Let's make some pretty stuff
+  COLOR_RESET='\e[0m'
+  COLOR_WHITE='\e[1;37m'
+  COLOR_BLACK='\e[0;30m'
+  COLOR_BLUE='\e[0;34m'
+  COLOR_LIGHT_BLUE='\e[1;34m'
+  COLOR_GREEN='\e[0;32m'
+  COLOR_LIGHT_GREEN='\e[1;32m'
+  COLOR_CYAN='\e[0;36m'
+  COLOR_LIGHT_CYAN='\e[1;36m'
+  COLOR_RED='\e[0;31m'
+  COLOR_LIGHT_RED='\e[1;31m'
+  COLOR_PURPLE='\e[0;35m'
+  COLOR_LIGHT_PURPLE='\e[1;35m'
+  COLOR_BROWN='\e[0;33m'
+  COLOR_YELLOW='\e[1;33m'
+  COLOR_GRAY='\e[0;30m'
+  COLOR_LIGHT_GRAY='\e[0;37m'
+  SYMBOL_TICK='✔'
+  SYMBOL_CROSS='✖'
+  SYMBOL_WARN='⚠'
+
+  detect_profile() {
+    local DETECTED_PROFILE
+    DETECTED_PROFILE=''
+    local SHELLTYPE
+    SHELLTYPE="$(basename "/$SHELL")"
+
+    if [ "$SHELLTYPE" = "bash" ]; then
+        if [ -f "$HOME/.bashrc" ]; then
+            DETECTED_PROFILE="$HOME/.bashrc"
+        elif [ -f "$HOME/.bash_profile" ]; then
+            DETECTED_PROFILE="$HOME/.bash_profile"
+        fi
+    elif [ "$SHELLTYPE" = "zsh" ]; then
+        DETECTED_PROFILE="$HOME/.zshrc"
+    fi
+
+    if [ ! -z "$DETECTED_PROFILE" ]; then
+        echo "$DETECTED_PROFILE"
+    fi
+  }
+
+
+}

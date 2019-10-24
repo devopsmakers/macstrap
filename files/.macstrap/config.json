@@ -1,0 +1,18 @@
+{
+    "versions": {},
+    "brew": {
+        "blacklist": [
+            "terraform",
+            "npm"
+        ],
+        "install": {
+            "tfenv": {},
+            "terragrunt": {
+                "options": "--ignore-dependencies"
+            },
+            "xterrafile": {
+                "tap": "devopsmakers/xterrafile"
+            }
+        }
+    }
+}

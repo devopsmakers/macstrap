@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if ! echo "$@" | grep -q http; then
+  /usr/bin/open $@
+  exit $?
+fi
+
+BASE_TEMP_DIR=/tmp
+TEMP_DIR=$(mktemp -d $BASE_TEMP_DIR/google-chome.XXXXXXX)
+
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=$TEMP_DIR --incognito --disable-default-apps --no-first-run $@ >/dev/null 2>&1 &
+
+APP_PID=$!
+
+while true; do
+  if ! kill -s 0 $APP_PID 2>/dev/null; then
+    rm -rf $TEMP_DIR
+    break
+  fi
+  sleep 10
+done &
