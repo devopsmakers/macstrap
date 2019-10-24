@@ -19,4 +19,6 @@ tools like `aws-vault` to login to the AWS Console.
 ## Installation
 
 TL; DR - Just tell me how to install it, I don't care if your break the things...
-`curl -o- https://devopsmakers.github.io/macstrap/install.sh | bash`
+```
+curl -o- https://devopsmakers.github.io/macstrap/install.sh | bash
+```
