@@ -75,9 +75,11 @@ grab_file() {
         mv "${HOME}/$1" "${HOME}/$1.bak"
     fi
     curl --fail "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
+    set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
     fi
+    set -u
 }
 
 install_homebrew() {
