@@ -87,7 +87,7 @@ grab_file() {
 }
 
 install_homebrew() {
-    brew version || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew --version || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     /usr/local/bin/brew doctor
 }
 
