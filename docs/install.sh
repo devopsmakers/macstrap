@@ -144,9 +144,11 @@ install_main() {
     echo "Note: Some tools will require a new terminal window"
     echo ""
 
+    set +u
     if [ -z $UP ]; then
         iterm_run_macstrap
     fi
+    set -u
 
     shell_reset
 }
