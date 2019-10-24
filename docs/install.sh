@@ -8,23 +8,15 @@ set -eu -o pipefail
 {
 
 # Let's make some pretty stuff
-COLOR_RESET="\e[0m"
-COLOR_WHITE="\e[1;37m"
-COLOR_BLACK="\e[0;30m"
-COLOR_BLUE="\e[0;34m"
-COLOR_LIGHT_BLUE="\e[1;34m"
-COLOR_GREEN="\e[0;32m"
-COLOR_LIGHT_GREEN="\e[1;32m"
-COLOR_CYAN="\e[0;36m"
-COLOR_LIGHT_CYAN="\e[1;36m"
-COLOR_RED="\e[0;31m"
-COLOR_LIGHT_RED="\e[1;31m"
-COLOR_PURPLE="\e[0;35m"
-COLOR_LIGHT_PURPLE="\e[1;35m"
-COLOR_BROWN="\e[0;33m"
-COLOR_YELLOW="\e[1;33m"
-COLOR_GRAY="\e[0;30m"
-COLOR_LIGHT_GRAY="\e[0;37m"
+COLOR_RESET="$(tput sgr0)"
+COLOR_BLACK="$(tput setaf 0)"
+COLOR_RED="$(tput setaf 1)"
+COLOR_GREEN="$(tput setaf 2)"
+COLOR_YELLOW="$(tput setaf 3)"
+COLOR_BLUE="$(tput setaf 4)"
+COLOR_MAGENTA="$(tput setaf 5)"
+COLOR_CYAN="$(tput setaf 6)"
+COLOR_WHITE="$(tput setaf 7)"
 SYMBOL_TICK="✔"
 SYMBOL_CROSS="✖"
 SYMBOL_WARN="⚠"
@@ -54,19 +46,19 @@ detect_profile() {
 
 ensure_bin_dirs() {
     if [ ! -d "$HOME/.bin" ]; then
-        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing user bin directory. Attempting to create"
+        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} Missing user bin directory. Attempting to create${COLOR_RESET}"
         mkdir -p "$HOME/.bin"
         chmod 0700 "$HOME/.bin"
         chown $USER:admin "$HOME/.bin"
     fi
     if [ ! -d "$HOME/.macstrap" ]; then
-        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing user macstrap config directory. Attempting to create"
+        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} Missing user macstrap config directory. Attempting to create${COLOR_RESET}"
         mkdir -p "$HOME/.macstrap"
         chmod 0700 "$HOME/.macstrap"
         chown $USER:admin "$HOME/.macstrap"
     fi
     if [ ! -d "/usr/local/bin" ]; then
-        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing install directory. Attempting to create, will prompt for your admin password:"
+        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} Missing install directory. Attempting to create, will prompt for your admin password:${COLOR_RESET}"
         local USER="$(whoami)"
         sudo mkdir /usr/local/bin
         sudo chmod 0775 /usr/local/bin
