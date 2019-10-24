@@ -98,7 +98,7 @@ grab_file() {
     if [ -f "${HOME}/$1" ]; then
         mv -f "${HOME}/$1" "${HOME}/$1.bak"
     fi
-    curl --connect-timeout 5 -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || (log_err "File: $1" && exit 1)
+    curl --connect-timeout 2 -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || (log_err "File: $1" && exit 1)
     set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
@@ -159,6 +159,7 @@ install_main() {
     grab_file ".macstrap/config.json"
     grab_file "Library/Preferences/com.googlecode.iterm2.plist"
 
+    echo ""
     log_ok "Install complete 🎉"
     echo ""
 
