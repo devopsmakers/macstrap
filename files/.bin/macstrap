@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+# Usage: macstrap [-F] [-U] [-H]
+#   default: run checks"
+#   -F: fix anything that is fixable
+#   -U: update macstrap & other tools to latest version
+#   -H: output this help message
 
 # Surrounding in brackets ensures that the whole script gets loaded to memory
 # before running which allows us to update the script from the script without
 # issue.
 {
 set -eu -o pipefail
-
 
 # Let's make some pretty stuff
 COLOR_RESET="$(tput sgr0)"
@@ -22,23 +26,38 @@ TEXT_BOLD="$(tput bold)"
 SYMBOL_TICK="✔"
 SYMBOL_CROSS="✖"
 SYMBOL_WARN="⚠"
+SYMBOL_DEBUG="⚲"
+
+log_debug() {
+    if [ ${DEBUG:-0} -eq 1 ]; then
+        echo "${COLOR_RESET}${SYMBOL_DEBUG} $@ ${COLOR_RESET}"
+    fi
+}
+
+log_info() {
+    echo "${COLOR_CYAN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
+}
 
 log_ok() {
-    echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} $@ ${COLOR_RESET}"
+    echo "${COLOR_GREEN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
 }
 
 log_warn() {
-    echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} $@ ${COLOR_RESET}"
+    echo "${COLOR_YELLOW}${SYMBOL_WARN} $@ ${COLOR_RESET}"
 }
 
 log_err() {
-    echo "${COLOR_RED}${SYMBOL_CROSS}${TEXT_BOLD}${COLOR_WHITE} $@ ${COLOR_RESET}"
+    echo "${TEXT_BOLD}${COLOR_RED}${SYMBOL_CROSS} $@ ${COLOR_RESET}"
 }
+
+# Global mode flags, set by options passed in
+FIX=0
+UP=0
 
 echo $@
 
 shell_reset() {
-    unset -f log_ok log_warn log_err shell_reset
+    unset -f log_debug log_info log_ok log_warn log_err shell_reset
 }
 
 shell_reset

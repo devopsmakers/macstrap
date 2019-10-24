@@ -20,18 +20,28 @@ TEXT_BOLD="$(tput bold)"
 SYMBOL_TICK="✔"
 SYMBOL_CROSS="✖"
 SYMBOL_WARN="⚠"
+SYMBOL_DEBUG="⚲"
+
+log_debug() {
+    if [ ${DEBUG:-0} -eq 1 ]; then
+        echo "${COLOR_RESET}${SYMBOL_DEBUG} $@ ${COLOR_RESET}"
+    fi
+}
+
+log_info() {
+    echo "${COLOR_CYAN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
+}
 
 log_ok() {
-    echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} $@ ${COLOR_RESET}"
+    echo "${COLOR_GREEN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
 }
 
 log_warn() {
-    echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} $@ ${COLOR_RESET}"
+    echo "${COLOR_YELLOW}${SYMBOL_WARN} $@ ${COLOR_RESET}"
 }
 
 log_err() {
-    echo "${COLOR_RED}${SYMBOL_CROSS}${TEXT_BOLD}${COLOR_WHITE} $@ ${COLOR_RESET}"
-    exit 1
+    echo "${TEXT_BOLD}${COLOR_RED}${SYMBOL_CROSS} $@ ${COLOR_RESET}"
 }
 
 GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
@@ -87,7 +97,7 @@ grab_file() {
     if [ -f "${HOME}/$1" ]; then
         mv -f "${HOME}/$1" "${HOME}/$1.bak"
     fi
-    curl --connect-timeout 5 -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || log_err "File: $1"
+    curl --connect-timeout 5 -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || (log_err "File: $1" && exit 1)
     set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
