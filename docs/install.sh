@@ -5,31 +5,31 @@
 # buffering issue.
 {
 
-  # Let's make some pretty stuff
-  COLOR_RESET='\e[0m'
-  COLOR_WHITE='\e[1;37m'
-  COLOR_BLACK='\e[0;30m'
-  COLOR_BLUE='\e[0;34m'
-  COLOR_LIGHT_BLUE='\e[1;34m'
-  COLOR_GREEN='\e[0;32m'
-  COLOR_LIGHT_GREEN='\e[1;32m'
-  COLOR_CYAN='\e[0;36m'
-  COLOR_LIGHT_CYAN='\e[1;36m'
-  COLOR_RED='\e[0;31m'
-  COLOR_LIGHT_RED='\e[1;31m'
-  COLOR_PURPLE='\e[0;35m'
-  COLOR_LIGHT_PURPLE='\e[1;35m'
-  COLOR_BROWN='\e[0;33m'
-  COLOR_YELLOW='\e[1;33m'
-  COLOR_GRAY='\e[0;30m'
-  COLOR_LIGHT_GRAY='\e[0;37m'
-  SYMBOL_TICK='✔'
-  SYMBOL_CROSS='✖'
-  SYMBOL_WARN='⚠'
+# Let's make some pretty stuff
+COLOR_RESET='\e[0m'
+COLOR_WHITE='\e[1;37m'
+COLOR_BLACK='\e[0;30m'
+COLOR_BLUE='\e[0;34m'
+COLOR_LIGHT_BLUE='\e[1;34m'
+COLOR_GREEN='\e[0;32m'
+COLOR_LIGHT_GREEN='\e[1;32m'
+COLOR_CYAN='\e[0;36m'
+COLOR_LIGHT_CYAN='\e[1;36m'
+COLOR_RED='\e[0;31m'
+COLOR_LIGHT_RED='\e[1;31m'
+COLOR_PURPLE='\e[0;35m'
+COLOR_LIGHT_PURPLE='\e[1;35m'
+COLOR_BROWN='\e[0;33m'
+COLOR_YELLOW='\e[1;33m'
+COLOR_GRAY='\e[0;30m'
+COLOR_LIGHT_GRAY='\e[0;37m'
+SYMBOL_TICK='✔'
+SYMBOL_CROSS='✖'
+SYMBOL_WARN='⚠'
 
-  GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
+GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
 
-  detect_profile() {
+detect_profile() {
     local DETECTED_PROFILE
     DETECTED_PROFILE=''
     local SHELLTYPE
@@ -48,9 +48,9 @@
     if [ ! -z "$DETECTED_PROFILE" ]; then
         echo "$DETECTED_PROFILE"
     fi
-  }
+}
 
-  ensure_bin_dirs() {
+ensure_bin_dirs() {
     if [ ! -d "$HOME/.bin" ]; then
         echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_RESET} Missing user bin directory. Attempting to create"
         mkdir -p "$HOME/.bin"
@@ -70,32 +70,32 @@
         sudo chmod 775 /usr/local/bin
         sudo chown $USER:admin /usr/local/bin
     fi
-  }
+}
 
-  ensure_xcode() {
+ensure_xcode() {
     xcode-select --install 2>/dev/null || echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} XCode tools installed"
-  }
+}
 
-  grab_file() {
+grab_file() {
     if [ -f "${HOME}/$1" ]; then
         mv "${HOME}/$1" "${HOME}/$1.bak"
     fi
     curl --fail "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
     chmod $2 "${HOME}/$1"
-  }
+}
 
-  install_homebrew() {
+install_homebrew() {
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     /usr/local/bin/brew doctor
-  }
+}
 
-  install_zsh() {
+install_zsh() {
     /usr/local/bin/brew install zsh
     grep -q /usr/local/bin/zsh /etc/shells || sudo -s 'echo /usr/local/bin/zsh >> /etc/shells'
     chsh -s /usr/local/bin/zsh
-  }
+}
 
-  install_main() {
+install_main() {
     ensure_bin_dirs
     ensure_xcode
 
@@ -120,9 +120,10 @@
     echo ""
 }
 
-  shell_reset() {
-      unset -f detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh grab_file install_main shell_reset
-  }
+shell_reset() {
+    unset -f detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh grab_file install_main shell_reset
+}
 
-  install_main
+install_main
+
 }
