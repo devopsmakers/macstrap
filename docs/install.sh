@@ -83,7 +83,9 @@ grab_file() {
         mv "${HOME}/$1" "${HOME}/$1.bak"
     fi
     curl --fail "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
-    chmod $2 "${HOME}/$1"
+    if [ ! -z $2 ]; then
+        chmod $2 "${HOME}/$1"
+    fi
 }
 
 install_homebrew() {
@@ -95,6 +97,35 @@ install_zsh() {
     /usr/local/bin/brew install zsh
     grep -q /usr/local/bin/zsh /etc/shells || sudo -s 'echo /usr/local/bin/zsh >> /etc/shells'
     chsh -s /usr/local/bin/zsh
+    if [ ! -d "${HOME}/.oh-my-zsh" ]; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    fi
+    if [ ! -d "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+        git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+    fi
+}
+
+install_iterm2() {
+    if [ ! -d /Applications/iTerm.app ]; then
+        brew cask install iterm2
+    fi
+    curl -o "/Library/Fonts/MesloLGS NF.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/S/Regular/complete/Meslo%20LG%20S%20Regular%20Nerd%20Font%20Complete.ttf
+}
+
+function iterm_run_macstrap() {
+    osascript &>/dev/null <<EOF
+        tell application "iTerm"
+            activate
+            set term to (make new terminal)
+            tell term
+                launch session "Default Session"
+                tell the last session
+                    delay 1
+                    write text "macstrap -H"
+                end
+            end
+        end tell
+EOF
 }
 
 install_main() {
@@ -106,6 +137,8 @@ install_main() {
     # Install and configure oh-my-zsh shell
     install_zsh
 
+    install_iterm2
+
     # Get the files that we want to install to $HOME
     grab_file ".zshrc" "0700"
     grab_file ".p10k.zsh" "0700"
@@ -113,17 +146,22 @@ install_main() {
     grab_file ".bin/macstrap" "0500"
     grab_file ".bin/open" "0500"
     grab_file ".macstrap/config.json"
-
-    shell_reset
+    grab_file "Library/Preferences/com.googlecode.iterm2.plist"
 
     echo "Install completed."
     echo ""
     echo "Note: Some tools will require a new terminal window"
     echo ""
+
+    if [ -z $UP ]; then
+        iterm_run_macstrap
+    fi
+
+    shell_reset
 }
 
 shell_reset() {
-    unset -f detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh grab_file install_main shell_reset
+    unset -f detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh install_iterm2 grab_file install_main shell_reset iterm_run_macstrap
 }
 
 install_main
