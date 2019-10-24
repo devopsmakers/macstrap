@@ -31,6 +31,7 @@ log_warn() {
 
 log_err() {
     echo "${COLOR_RED}${SYMBOL_CROSS}${TEXT_BOLD}${COLOR_WHITE} $@ ${COLOR_RESET}"
+    exit 1
 }
 
 GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
@@ -86,7 +87,7 @@ grab_file() {
     if [ -f "${HOME}/$1" ]; then
         mv -f "${HOME}/$1" "${HOME}/$1.bak"
     fi
-    curl -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || log_err "File: $1"
+    curl --connect-timeout 5 -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || log_err "File: $1"
     set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
