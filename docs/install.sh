@@ -21,8 +21,6 @@ SYMBOL_TICK="✔"
 SYMBOL_CROSS="✖"
 SYMBOL_WARN="⚠"
 
-GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
-
 log_ok() {
     echo "${COLOR_GREEN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
 }
@@ -34,6 +32,8 @@ log_warn() {
 log_err() {
     echo "${COLOR_RED}${SYMBOL_CROSS}${COLOR_WHITE} $@ ${COLOR_RESET}"
 }
+
+GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
 
 detect_profile() {
     local DETECTED_PROFILE
