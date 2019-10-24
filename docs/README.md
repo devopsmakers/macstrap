@@ -1,7 +1,7 @@
 # macstrap - This may be destructive
 It's boring bootstrapping a new MacBook time and time again - here is what I use to do it.
 
-> Based heavily on some internal tooling in use at Ghost.
+> Based heavily on some internal tooling in use at [Ghost](https://ghost.org).
 
 ## Installs
 The following things will be installed and configured wherever possible.
