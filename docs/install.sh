@@ -21,6 +21,7 @@ SYMBOL_TICK="✔"
 SYMBOL_CROSS="✖"
 SYMBOL_WARN="⚠"
 SYMBOL_DEBUG="⚲"
+SYMBOL_INFO="ⓘ"
 
 log_debug() {
     if [ ${DEBUG:-0} -eq 1 ]; then
@@ -29,7 +30,7 @@ log_debug() {
 }
 
 log_info() {
-    echo "${COLOR_CYAN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
+    echo "${COLOR_CYAN}${SYMBOL_INFO} $@ ${COLOR_RESET}"
 }
 
 log_ok() {
@@ -90,7 +91,7 @@ ensure_bin_dirs() {
 }
 
 ensure_xcode() {
-    xcode-select --install 2>/dev/null || echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} XCode tools installed"
+    xcode-select --install 2>/dev/null || log_ok "XCode tools installed"
 }
 
 grab_file() {
@@ -158,12 +159,12 @@ install_main() {
     grab_file ".macstrap/config.json"
     grab_file "Library/Preferences/com.googlecode.iterm2.plist"
 
-    echo "Install complete."
+    log_ok "Install complete 🎉"
     echo ""
 
     set +u
     if [ -z $UP ]; then
-        echo "Opening iTerm2 to run macstrap"
+        log_info "Opening iTerm2 to run macstrap"
         iterm_run_macstrap
     fi
     set -u
