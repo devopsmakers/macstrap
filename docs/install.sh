@@ -23,6 +23,18 @@ SYMBOL_WARN="⚠"
 
 GITHUB_FILE_PATH="https://raw.githubusercontent.com/devopsmakers/macstrap/master/files/"
 
+log_ok() {
+    echo "${COLOR_GREEN}${SYMBOL_TICK} $@ ${COLOR_RESET}"
+}
+
+log_warn() {
+    echo "${COLOR_YELLOW}${SYMBOL_WARN} $@ ${COLOR_RESET}"
+}
+
+log_err() {
+    echo "${COLOR_RED}${SYMBOL_CROSS}${COLOR_WHITE} $@ ${COLOR_RESET}"
+}
+
 detect_profile() {
     local DETECTED_PROFILE
     DETECTED_PROFILE=''
@@ -46,19 +58,19 @@ detect_profile() {
 
 ensure_bin_dirs() {
     if [ ! -d "$HOME/.bin" ]; then
-        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} Missing user bin directory. Attempting to create${COLOR_RESET}"
+        log_warn "Missing user bin directory. Attempting to create"
         mkdir -p "$HOME/.bin"
         chmod 0700 "$HOME/.bin"
         chown $USER:admin "$HOME/.bin"
     fi
     if [ ! -d "$HOME/.macstrap" ]; then
-        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} Missing user macstrap config directory. Attempting to create${COLOR_RESET}"
+        log_warn "Missing user macstrap config directory. Attempting to create"
         mkdir -p "$HOME/.macstrap"
         chmod 0700 "$HOME/.macstrap"
         chown $USER:admin "$HOME/.macstrap"
     fi
     if [ ! -d "/usr/local/bin" ]; then
-        echo "${COLOR_YELLOW}${SYMBOL_WARN}${COLOR_WHITE} Missing install directory. Attempting to create, will prompt for your admin password:${COLOR_RESET}"
+        log_warn "Missing install directory. Attempting to create, will prompt for your admin password:"
         local USER="$(whoami)"
         sudo mkdir /usr/local/bin
         sudo chmod 0775 /usr/local/bin
@@ -74,8 +86,7 @@ grab_file() {
     if [ -f "${HOME}/$1" ]; then
         mv -f "${HOME}/$1" "${HOME}/$1.bak"
     fi
-    echo "${COLOR_GREEN}${SYMBOL_TICK}${COLOR_RESET} Fetching file: $1"
-    curl -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1"
+    curl -fsS "${GITHUB_FILE_PATH}/$1" -o "${HOME}/$1" && log_ok "File: $1" || log_err "File: $1"
     set +u
     if [ ! -z $2 ]; then
         chmod $2 "${HOME}/$1"
@@ -135,22 +146,21 @@ install_main() {
     grab_file ".macstrap/config.json"
     grab_file "Library/Preferences/com.googlecode.iterm2.plist"
 
-    echo "Install completed."
-    echo ""
-    echo "Opening iTerm2 to run macstrap"
+    echo "Install complete."
     echo ""
 
     set +u
     if [ -z $UP ]; then
+        echo "Opening iTerm2 to run macstrap"
         iterm_run_macstrap
     fi
     set -u
-
+    echo ""
     shell_reset
 }
 
 shell_reset() {
-    unset -f detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh install_iterm2 grab_file install_main shell_reset iterm_run_macstrap
+    unset -f log_ok log_warn log_err detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh install_iterm2 grab_file install_main shell_reset iterm_run_macstrap
 }
 
 install_main
