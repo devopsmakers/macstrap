@@ -90,7 +90,7 @@ install_homebrew() {
 install_zsh() {
     /usr/local/bin/brew install zsh
     grep -q /usr/local/bin/zsh /etc/shells || sudo -s 'echo /usr/local/bin/zsh >> /etc/shells'
-    chsh -s /usr/local/bin/zsh
+    echo $SHELL | grep -q "/usr/local/bin/zsh" || chsh -s /usr/local/bin/zsh
     if [ ! -d "${HOME}/.oh-my-zsh" ]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
