@@ -109,15 +109,12 @@ install_iterm2() {
 function iterm_run_macstrap() {
     osascript &>/dev/null <<EOF
         tell application "iTerm"
-            activate
-            set term to (make new terminal)
-            tell term
-                launch session "Default Session"
-                tell the last session
-                    delay 5
-                    write text "macstrap -H"
-                end
-            end
+        	activate
+        	create window with default profile
+        	tell current session of current window
+        		delay 2
+        		write text "macstrap -H"
+        	end tell
         end tell
 EOF
 }
