@@ -118,7 +118,7 @@ macstrap_main() {
     # Start by processing arguments, to see what mode we are in
     # Ref: http://mywiki.wooledge.org/BashFAQ/035#Manual_loop
     while :; do
-        case $1 in
+        case "${1:-}" in
             -h|-H|-\?|--help|-help|help)
                 macstrap_usage
                 ;;
