@@ -154,6 +154,7 @@ install_main() {
     grab_file ".myrc" "0700"
     grab_file ".bin/macstrap" "0500"
     grab_file ".bin/open" "0500"
+    grab_file ".bin/semver" "0500"
     grab_file ".macstrap/config.json"
     grab_file "Library/Preferences/com.googlecode.iterm2.plist"
 
@@ -171,7 +172,9 @@ install_main() {
 }
 
 shell_reset() {
-    unset -f log_ok log_warn log_err detect_profile ensure_bin_dirs ensure_xcode install_homebrew install_zsh install_iterm2 grab_file install_main shell_reset iterm_run_macstrap
+    unset -f log_ok log_warn log_err detect_profile ensure_bin_dirs ensure_xcode \
+        install_homebrew install_zsh install_iterm2 grab_file install_main \
+        shell_reset iterm_run_macstrap
 }
 
 install_main
